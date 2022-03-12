@@ -55,13 +55,12 @@ function App() {
             <Route path="/LoggerSignIn">
               <LoggerSignIn />
             </Route>
-<<<<<<< HEAD
             <Route exact path="/AdminDataVisualizer">
               <AdminDataViewer />
-=======
+            </Route>
+
             <Route path="/LoggerProfile">
               <LoggerProfile />
->>>>>>> 659ff2e74dc665e6c1de551f001d35248bbfc069
             </Route>
           </Switch>
         </Router>

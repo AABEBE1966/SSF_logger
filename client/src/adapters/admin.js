@@ -80,6 +80,7 @@ export const findAllMetrics = async (setAllMetricsData) => {
     })
       .then(async (res) => {
         let data = await res.json();
+        console.log("inside api call function");
         if (res.status === 200) {
           // const cookies = new Cookies();
           // let isAuth = cookies.get("isAuth") === "true" ? true : false;

@@ -194,8 +194,8 @@ router.get("/find_person/", withAuthAdmin, async (req, res) => {
 
 
 router.get("/find_all_metrics", async (req, res) => {
-    const total_person_count = await Person.find({}).count();
-    const total_bullet_count_data = await Person.aggregate([{
+    const person = await Person.find({}).count();
+    const bullet_data = await Person.aggregate([{
         $group: {
             _id: null,
             total: {
@@ -203,16 +203,16 @@ router.get("/find_all_metrics", async (req, res) => {
             }
         }
     }]);
-    const total_ak47 = await Person.find({ armType: 'AK 47' }).count();
-    const total_brail = await Person.find({ armType: 'Brail' }).count();
-    const total_dishka = await Person.find({ armType: 'Dishka' }).count();
-    const total_Abraraw = await Person.find({ armType: 'Abraraw' }).count();
-    const total_Guande = await Person.find({ armType: 'Guande' }).count();
+    const AK47 = await Person.find({ armType: 'AK 47' }).count();
+    const brail = await Person.find({ armType: 'Brail' }).count();
+    const dishka = await Person.find({ armType: 'Dishka' }).count();
+    const abraraw = await Person.find({ armType: 'Abraraw' }).count();
+    const guande = await Person.find({ armType: 'Guande' }).count();
 
-    let total_bullet_count = total_bullet_count_data[0].total
+    let bullet = bullet_data[0].total
     let data = {
-        "total_person_count": total_person_count, "total_ak47": total_ak47, "total_bullet_count": total_bullet_count
-        , "total_brail": total_brail, "total_dishka": total_dishka, "total_Abraraw": total_Abraraw, "total_Guande": total_Guande
+        "person": person, "AK47": AK47, "bullet": bullet
+        , "brail": brail, "dishka": dishka, "abraraw": abraraw, "guande": guande
     }
 
     try {
@@ -228,8 +228,8 @@ router.get("/find_all_metrics_for_zone", async (req, res) => {
     const { zone } = req.body
     console.log(zone)
 
-    const total_person_count = await Person.find({ zone: zone }).count();
-    const total_bullet_count_data = await Person.aggregate([{
+    const person = await Person.find({ zone: zone }).count();
+    const bullet_data = await Person.aggregate([{
         $match: { zone: zone }
     }, {
         $group: {
@@ -239,16 +239,16 @@ router.get("/find_all_metrics_for_zone", async (req, res) => {
             }
         }
     }]);
-    const total_ak47 = await Person.find({ zone: zone, armType: 'AK 47' }).count();
-    const total_brail = await Person.find({ zone: zone, armType: 'Brail' }).count();
-    const total_dishka = await Person.find({ zone: zone, armType: 'Dishka' }).count();
-    const total_Abraraw = await Person.find({ zone: zone, armType: 'Abraraw' }).count();
-    const total_Guande = await Person.find({ zone: zone, armType: 'Guande' }).count();
+    const AK47 = await Person.find({ zone: zone, armType: 'AK 47' }).count();
+    const brail = await Person.find({ zone: zone, armType: 'Brail' }).count();
+    const dishka = await Person.find({ zone: zone, armType: 'Dishka' }).count();
+    const abraraw = await Person.find({ zone: zone, armType: 'Abraraw' }).count();
+    const guande = await Person.find({ zone: zone, armType: 'Guande' }).count();
 
-    let total_bullet_count = total_bullet_count_data[0].total
+    let bullet = bullet_data[0].total
     let data = {
-        "total_person_count": total_person_count, "total_ak47": total_ak47, "total_bullet_count": total_bullet_count
-        , "total_brail": total_brail, "total_dishka": total_dishka, "total_Abraraw": total_Abraraw, "total_Guande": total_Guande
+        "person": person, "AK47": AK47, "bullet": bullet
+        , "brail": brail, "dishka": dishka, "abraraw": abraraw, "guande": guande
     }
 
     try {
@@ -264,8 +264,8 @@ router.get("/find_all_metrics_for_zone", async (req, res) => {
 router.get("/find_all_metrics_for_wereda", async (req, res) => {
     const { zone, wereda } = req.body
 
-    const total_person_count = await Person.find({ zone: zone, wereda: wereda }).count();
-    const total_bullet_count_data = await Person.aggregate([{
+    const person = await Person.find({ zone: zone, wereda: wereda }).count();
+    const bullet_data = await Person.aggregate([{
         $match: { zone: zone }
     }, {
         $group: {
@@ -275,16 +275,16 @@ router.get("/find_all_metrics_for_wereda", async (req, res) => {
             }
         }
     }]);
-    const total_ak47 = await Person.find({ zone: zone, armType: 'AK 47' }).count();
-    const total_brail = await Person.find({ zone: zone, armType: 'Brail' }).count();
-    const total_dishka = await Person.find({ zone: zone, armType: 'Dishka' }).count();
-    const total_Abraraw = await Person.find({ zone: zone, armType: 'Abraraw' }).count();
-    const total_Guande = await Person.find({ zone: zone, armType: 'Guande' }).count();
+    const AK47 = await Person.find({ zone: zone, armType: 'AK 47' }).count();
+    const brail = await Person.find({ zone: zone, armType: 'Brail' }).count();
+    const dishka = await Person.find({ zone: zone, armType: 'Dishka' }).count();
+    const abraraw = await Person.find({ zone: zone, armType: 'Abraraw' }).count();
+    const guande = await Person.find({ zone: zone, armType: 'Guande' }).count();
 
-    let total_bullet_count = total_bullet_count_data[0].total
+    let bullet = bullet_data[0].total
     let data = {
-        "total_person_count": total_person_count, "total_ak47": total_ak47, "total_bullet_count": total_bullet_count
-        , "total_brail": total_brail, "total_dishka": total_dishka, "total_Abraraw": total_Abraraw, "total_Guande": total_Guande
+        "person": person, "AK47": AK47, "bullet": bullet
+        , "brail": brail, "dishka": dishka, "abraraw": abraraw, "guande": guande
     }
 
     try {
