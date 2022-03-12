@@ -9,7 +9,6 @@ import LoggerProfile from "./Logger/LoggerProfile";
 function App() {
   const [user, setUser] = useState();
 
-
   // const getData = () => {
   //   fetch("/api/v1/admin/find_metrics", {
   //     method: "GET",
@@ -58,7 +57,6 @@ function App() {
             <Route exact path="/AdminDataVisualizer">
               <AdminDataViewer />
             </Route>
-
             <Route path="/LoggerProfile">
               <LoggerProfile />
             </Route>
