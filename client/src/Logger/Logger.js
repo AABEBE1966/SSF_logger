@@ -9,7 +9,7 @@ export default function Logger() {
 
   return (
     <div className=" w-full max-w-sm ">
-      <div className="rounded border   px-4 py-6">
+      <div className="rounded border px-4 py-6">
         <div>
           <div className=" inline-block rounded-full bg-purple-300 p-6 ">
             <User />

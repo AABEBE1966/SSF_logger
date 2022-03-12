@@ -1,7 +1,9 @@
 // Import dependencies
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
+
 dotenv.config({
-    path: "./config.env",
+  path: "./config.env",
 });
 
 const express = require("express");
@@ -14,7 +16,7 @@ const MONGO_URL = process.env.MONGO_URL;
 
 // Create a new express application named 'app'
 const app = express();
-
+app.use(cookieParser());
 // Set our backend port to be either an environment variable or port 5000
 const port = process.env.PORT || 5000;
 
@@ -37,8 +39,8 @@ app.use(
 app.use(cors());
 
 // Require Route
-const loggerAPI= require("./routes/logger");
-const adminAPI= require("./routes/admin")
+const loggerAPI = require("./routes/logger");
+const adminAPI = require("./routes/admin");
 // Configure app to use route
 app.use("/api/v1/logger", loggerAPI);
 app.use("/api/v1/admin", adminAPI);
@@ -65,6 +67,6 @@ app.get("*", (req, res) => {
 // Configure our server to listen on the port defiend by our port variable
 app.listen(port, () => console.log(`BACK_END_SERVICE_PORT: ${port}`));
 mongoose
-    .connect(MONGO_URL)
-    .then(() => console.log(`mongodb connected: ${port}`))
-    .catch((error) => console.log(error.message));
+  .connect(MONGO_URL)
+  .then(() => console.log(`mongodb connected: ${port}`))
+  .catch((error) => console.log(error.message));
