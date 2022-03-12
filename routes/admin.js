@@ -161,8 +161,8 @@ router.get("/get_logged_in_admin", withAuthAdmin, async (req, res) => {
     }
 });
 
-router.get("/find_all_persons_by_zone/:zone", withAuthAdmin, async (req, res) => {
-    const zone = req.params.zone;
+router.get("/find_all_persons_by_zone/", withAuthAdmin, async (req, res) => {
+    const { zone } = req.body
     try {
         let persons = await Person.find({ zone: zone })
         return res.status(200).send(persons);
@@ -171,9 +171,8 @@ router.get("/find_all_persons_by_zone/:zone", withAuthAdmin, async (req, res) =>
     }
 });
 
-router.get("/find_all_persons_by_wereda/:zone/:wereda", withAuthAdmin, async (req, res) => {
-    const zone = req.params.zone;
-    const wereda = req.params.wereda
+router.get("/find_all_persons_by_wereda/", withAuthAdmin, async (req, res) => {
+    const { wereda, zone } = req.body
     try {
         let persons = await Person.find({ zone: zone, wereda: wereda })
         return res.status(200).send(persons);
@@ -182,8 +181,9 @@ router.get("/find_all_persons_by_wereda/:zone/:wereda", withAuthAdmin, async (re
     }
 });
 
-router.get("/find_person/:license_number", withAuthAdmin, async (req, res) => {
-    const licenseNumber = req.params.license_number;
+router.get("/find_person/", withAuthAdmin, async (req, res) => {
+    const { licenseNumber } = req.body
+
     try {
         let persons = await Person.find({ licenseNumber: licenseNumber })
         return res.status(200).send(persons);
@@ -193,12 +193,9 @@ router.get("/find_person/:license_number", withAuthAdmin, async (req, res) => {
 });
 
 
-router.get("/find_metrics", async (req, res) => {
-    const person = await Person.find({})
-   // console.log(person)
+router.get("/find_all_metrics", async (req, res) => {
     const total_person_count = await Person.find({}).count();
-    console.log(total_person_count);
-    const total_bullet_count = await Person.aggregate([{
+    const total_bullet_count_data = await Person.aggregate([{
         $group: {
             _id: null,
             total: {
@@ -206,17 +203,96 @@ router.get("/find_metrics", async (req, res) => {
             }
         }
     }]);
-
     const total_ak47 = await Person.find({ armType: 'AK 47' }).count();
-    console.log(total_bullet_count[0].total)
-    console.log(total_ak47)
+    const total_brail = await Person.find({ armType: 'Brail' }).count();
+    const total_dishka = await Person.find({ armType: 'Dishka' }).count();
+    const total_Abraraw = await Person.find({ armType: 'Abraraw' }).count();
+    const total_Guande = await Person.find({ armType: 'Guande' }).count();
+
+    let total_bullet_count = total_bullet_count_data[0].total
+    let data = {
+        "total_person_count": total_person_count, "total_ak47": total_ak47, "total_bullet_count": total_bullet_count
+        , "total_brail": total_brail, "total_dishka": total_dishka, "total_Abraraw": total_Abraraw, "total_Guande": total_Guande
+    }
+
     try {
         //let persons = await Person.find({ licenseNumber: licenseNumber })
-        return res.status(200).send(total_bullet_count);
+        return res.status(200).send(data);
     } catch (err) {
         return res.status(201).send({ message: "Something is wrong. Please retry. " + err.message });
     }
 });
 
+
+router.get("/find_all_metrics_for_zone", async (req, res) => {
+    const { zone } = req.body
+    console.log(zone)
+
+    const total_person_count = await Person.find({ zone: zone }).count();
+    const total_bullet_count_data = await Person.aggregate([{
+        $match: { zone: zone }
+    }, {
+        $group: {
+            _id: null,
+            total: {
+                $sum: "$bulletNumber"
+            }
+        }
+    }]);
+    const total_ak47 = await Person.find({ zone: zone, armType: 'AK 47' }).count();
+    const total_brail = await Person.find({ zone: zone, armType: 'Brail' }).count();
+    const total_dishka = await Person.find({ zone: zone, armType: 'Dishka' }).count();
+    const total_Abraraw = await Person.find({ zone: zone, armType: 'Abraraw' }).count();
+    const total_Guande = await Person.find({ zone: zone, armType: 'Guande' }).count();
+
+    let total_bullet_count = total_bullet_count_data[0].total
+    let data = {
+        "total_person_count": total_person_count, "total_ak47": total_ak47, "total_bullet_count": total_bullet_count
+        , "total_brail": total_brail, "total_dishka": total_dishka, "total_Abraraw": total_Abraraw, "total_Guande": total_Guande
+    }
+
+    try {
+        //let persons = await Person.find({ licenseNumber: licenseNumber })
+        return res.status(200).send(data);
+    } catch (err) {
+        return res.status(201).send({ message: "Something is wrong. Please retry. " + err.message });
+    }
+});
+
+
+
+router.get("/find_all_metrics_for_wereda", async (req, res) => {
+    const { zone, wereda } = req.body
+
+    const total_person_count = await Person.find({ zone: zone, wereda: wereda }).count();
+    const total_bullet_count_data = await Person.aggregate([{
+        $match: { zone: zone }
+    }, {
+        $group: {
+            _id: null,
+            total: {
+                $sum: "$bulletNumber"
+            }
+        }
+    }]);
+    const total_ak47 = await Person.find({ zone: zone, armType: 'AK 47' }).count();
+    const total_brail = await Person.find({ zone: zone, armType: 'Brail' }).count();
+    const total_dishka = await Person.find({ zone: zone, armType: 'Dishka' }).count();
+    const total_Abraraw = await Person.find({ zone: zone, armType: 'Abraraw' }).count();
+    const total_Guande = await Person.find({ zone: zone, armType: 'Guande' }).count();
+
+    let total_bullet_count = total_bullet_count_data[0].total
+    let data = {
+        "total_person_count": total_person_count, "total_ak47": total_ak47, "total_bullet_count": total_bullet_count
+        , "total_brail": total_brail, "total_dishka": total_dishka, "total_Abraraw": total_Abraraw, "total_Guande": total_Guande
+    }
+
+    try {
+        //let persons = await Person.find({ licenseNumber: licenseNumber })
+        return res.status(200).send(data);
+    } catch (err) {
+        return res.status(201).send({ message: "Something is wrong. Please retry. " + err.message });
+    }
+});
 
 module.exports = router;
