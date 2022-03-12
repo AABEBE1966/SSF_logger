@@ -4,6 +4,7 @@ import LoggerSignUp from "./Logger/LoggerSignUp";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LoggerSignIn from "./Logger/LoggerSignIn";
 import { LoggerProvider } from "./contexts/loggerContext";
+import LoggerProfile from "./Logger/LoggerProfile";
 function App() {
   const [user, setUser] = useState();
 
@@ -52,6 +53,9 @@ function App() {
             </Route>
             <Route path="/LoggerSignIn">
               <LoggerSignIn />
+            </Route>
+            <Route path="/LoggerProfile">
+              <LoggerProfile />
             </Route>
           </Switch>
         </Router>

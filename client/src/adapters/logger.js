@@ -56,6 +56,7 @@ export const signInLoggerWithAPI = async (data, history, setLoggerDetails) => {
         // const cookies = new Cookies();
         // let isAuth = cookies.get("isAuth") === "true" ? true : false;
         // isAuth ? history.push("/AdminDashboard") : console.log("not is auth");
+        history.push("/LoggerProfile");
         setLoggerDetails(data.logger);
         console.log(data.message);
         console.log(data.logger);
