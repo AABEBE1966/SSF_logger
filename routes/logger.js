@@ -142,7 +142,7 @@ router.get("/log_out", withAuthLogger, async function (req, res) {
 
 
 router.post("/log_user_data", withAuthLogger, async (req, res) => {
-    const { firstName, lastName, province, zone, wereda, kebele, licenseNumber, armType, bulletNumber } = req.body
+    const { firstName, lastName, zone, wereda, kebele, licenseNumber, armType, bulletNumber } = req.body
 
     try {
         let existingPerson = await Person.findOne({ licenseNumber: licenseNumber })
@@ -150,7 +150,7 @@ router.post("/log_user_data", withAuthLogger, async (req, res) => {
             return res.status(201).send({ message: `Person with licenseNumber: ${licenseNumber} is logged already. ` });
         }
         let person = new Person({
-            firstName, lastName, province, zone, wereda, kebele, licenseNumber, armType, bulletNumber
+            firstName, lastName, zone, wereda, kebele, licenseNumber, armType, bulletNumber
         })
         await person.save()
         return res.status(200).send({ message: "Information uploaded successfully!" });
