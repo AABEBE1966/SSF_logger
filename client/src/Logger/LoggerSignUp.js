@@ -3,16 +3,16 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { ChevronDown, ChevronLeft, Eye, EyeOff } from "react-feather";
 import Button from "../components/Button";
 import zones from "../Data";
-import { object } from "yup/lib/locale";
+import { createLogger } from "../adapters/logger";
+import { useLoggerContext } from "../contexts/loggerContext";
+import { Link, useHistory } from "react-router-dom";
 
 export default function LoggerSignUp() {
-  // zones drop down
-  // render the list
-  // onClick li > render its dis
+  const { setLoggerDetails } = useLoggerContext();
+  let history = useHistory();
 
   const formSchema = Yup.object().shape({
     firstName: Yup.string().required("firstName is mandatory"),
@@ -26,7 +26,6 @@ export default function LoggerSignUp() {
   });
 
   const formOptions = { resolver: yupResolver(formSchema) };
-  let history = useHistory();
   const {
     register,
     handleSubmit,
@@ -37,8 +36,8 @@ export default function LoggerSignUp() {
   console.log(Object.keys(zones));
   const [isShowingZones, setIsShowingZones] = useState(false);
   const [isShowingDistricts, setIsShowingDistricts] = useState(false);
-  const [selectedZone, setSelectedZone] = useState(false);
-  const [selectedDistrict, setSelectedDistrict] = useState(false);
+  const [selectedZone, setSelectedZone] = useState();
+  const [selectedDistrict, setSelectedDistrict] = useState();
   return (
     <div className="  flex  flex-col items-center justify-center ">
       <div className="mb-4 w-full max-w-sm">
@@ -50,7 +49,11 @@ export default function LoggerSignUp() {
       <form
         className="mb-4 w-full max-w-md  "
         onSubmit={handleSubmit(async (data) => {
-          //       await createUser(data, history, showAlert);
+          if (selectedZone && selectedDistrict) {
+            await createLogger(data, selectedZone, selectedDistrict, history);
+          } else {
+            console.log("you mush did not added dis or zone");
+          }
         })}
       >
         <div className=" m-auto max-w-sm space-y-4 rounded-md bg-white p-6 shadow-md ">
@@ -112,8 +115,10 @@ export default function LoggerSignUp() {
               onClick={() => setIsShowingZones(!isShowingZones)}
               className=" mb-2 flex cursor-pointer justify-between rounded-md  border  p-2 shadow-lg "
             >
-              {/* <p>{`Zones > ${selectedZone} > ${selectedDistrict} `}</p> */}
-              <p>Zones</p>
+              <p>{` ${selectedZone ? selectedZone : ""} , ${
+                selectedDistrict ? selectedDistrict : ""
+              } `}</p>
+              {selectedZone ? null : <p>Zones</p>}
               <ChevronDown
                 className={`transition-transform  ${
                   isShowingZones ? " rotate-180 " : "rotate-0  "
@@ -151,7 +156,10 @@ export default function LoggerSignUp() {
                               <p
                                 key={idx}
                                 className=" cursor-pointer "
-                                onClick={() => setSelectedDistrict(district)}
+                                onClick={() => {
+                                  setSelectedDistrict(district);
+                                  setIsShowingZones(false);
+                                }}
                               >
                                 {district}
                               </p>
@@ -230,12 +238,12 @@ export default function LoggerSignUp() {
           <div className=" flex justify-center ">
             <Button>Join Vision</Button>
           </div>
-          {/* <div className="  text-xs w-full rounded-md bg-gray-50 p-3 text-center">
+          <div className="  text-xs w-full rounded-md bg-gray-50 p-3 text-center">
             already a member?{" "}
-            <Link to="/SignIn" className="p-3 text-blue-400 ">
+            <Link to="/LoggerSignIn" className="p-3 text-blue-400 ">
               Sign in
             </Link>
-          </div> */}
+          </div>
         </div>
       </form>
     </div>
