@@ -4,6 +4,7 @@ import LoggerSignUp from "./Logger/LoggerSignUp";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LoggerSignIn from "./Logger/LoggerSignIn";
 import { LoggerProvider } from "./contexts/loggerContext";
+import AdminDataViewer from "./Admin/AdminDataViewer";
 import LoggerProfile from "./Logger/LoggerProfile";
 function App() {
   const [user, setUser] = useState();
@@ -54,8 +55,13 @@ function App() {
             <Route path="/LoggerSignIn">
               <LoggerSignIn />
             </Route>
+<<<<<<< HEAD
+            <Route exact path="/AdminDataVisualizer">
+              <AdminDataViewer />
+=======
             <Route path="/LoggerProfile">
               <LoggerProfile />
+>>>>>>> 659ff2e74dc665e6c1de551f001d35248bbfc069
             </Route>
           </Switch>
         </Router>

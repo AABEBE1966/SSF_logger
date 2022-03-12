@@ -89,7 +89,7 @@ router.post("/sign_in", async function (req, res) {
                 res.cookie("admin_token", token);
                 res.cookie("isAuth", true);
                 await admin.save();
-                let adminRes = await Admin.findById(admin._id, { password: 0, tokens: 0 })
+                let adminRes = await Admin.findById(admin._id, { password: 0, tokens: 0, email:0 })
                 return res.status(200).send({
                     message: "Logger signed in successfully!",
                     admin: adminRes
