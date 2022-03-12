@@ -6,6 +6,7 @@ import LoggerSignIn from "./Logger/LoggerSignIn";
 import { LoggerProvider } from "./contexts/loggerContext";
 import AdminDataViewer from "./Admin/AdminDataViewer";
 import LoggerProfile from "./Logger/LoggerProfile";
+import Admin from "./Admin/Admin";
 function App() {
   const [user, setUser] = useState();
 
@@ -55,7 +56,7 @@ function App() {
               <LoggerSignIn />
             </Route>
             <Route exact path="/AdminDataVisualizer">
-              <AdminDataViewer />
+              <Admin />
             </Route>
             <Route path="/LoggerProfile">
               <LoggerProfile />
