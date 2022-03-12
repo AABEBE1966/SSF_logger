@@ -158,7 +158,7 @@ const zones = {
     "Yilmana Densa",
   ],
   "Bahir Dar": ["Bahir Dar"],
-  Argobba: ["Argobba"],
+  'Argobba': ["Argobba"],
 };
 
 export default zones;

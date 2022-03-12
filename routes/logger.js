@@ -4,6 +4,14 @@ const withAuthLogger = require("../controllers/withAuthLogger")
 const Logger = require("../models/Logger");
 const Person = require("../models/Person");
 const dotenv = require("dotenv");
+const { zones } = require("../models/CONSTANTS");
+
+const names = [
+    "abebe", "alemu", "yosef", "mekonen", "mengesha", "chane", "mekash", "abere", "alemu", "belay", "Sisay", "Destaw", "Tesfaye", "Habtamu"
+]
+const armTypes = ["AK 47", "Brail", "Dishka", "Abraraw", "Guande"]
+const zones_with_keys = Object.keys(zones);
+
 dotenv.config({
     path: "../config.env",
 });
@@ -115,7 +123,7 @@ router.get("/log_out", withAuthLogger, async function (req, res) {
     );
 
     if (already_login && already_login["tokens"].indexOf(token) !== -1) {
-        already_login["tokens"]=[]
+        already_login["tokens"] = []
         //.splice((already_login["tokens"].indexOf(token), 1));
         res.cookie("email", "");
         res.cookie("logger_token", "");
@@ -163,16 +171,53 @@ router.get("/find_all_persons", async (req, res) => {
 
 
 router.get("/get_logged_in_logger", withAuthLogger, async (req, res) => {
-    let token=req
+    let token = req
     console.log(req)
     let logger_id = req.loggerId
     console.log(logger_id)
     try {
-        let logger = await Logger.findById(logger_id,{tokens:0, password:0})
+        let logger = await Logger.findById(logger_id, { tokens: 0, password: 0 })
         return res.status(200).send({ logger: logger, message: "Logger data returned successfully!" });
     } catch (err) {
         return res.status(201).send({ message: "Something is wrong. Please retry. " + err.message });
     }
 });
 
+
+router.get("/generate_data", async (req, res) => {
+    // for (let i = 10000; i < 100000; i++) {
+    //     let data = generateData(i)
+    //     //console.log(data)
+    //     try {
+
+    //         let person = new Person(data)
+    //         await person.save()
+    //         console.log(`Created ${person._id} at ${i} iteration.`)
+    //     } catch (err) {
+    //         console.log(pe`Failed at ${i} iteration.`)
+    //         console.log(err.message);
+    //     }
+    // }
+});
+
+const randomChoice = arr => {
+    const randIndex = Math.floor(Math.random() * arr.length);
+    return arr[randIndex];
+};
+
+const generateData = (idx) => {
+
+    const firstName = randomChoice(names)
+    const lastName = randomChoice(names)
+    const zone = randomChoice(zones_with_keys)
+    const wereda = randomChoice(zones[zone])
+    const armType = randomChoice(armTypes)
+    const kebele = Math.floor(Math.random() * 30) + 1;
+    const bulletNumber = Math.floor(Math.random() * 100) + 1;
+    const licenseNumber = `${idx}${firstName}`
+    return {
+        firstName, lastName, armType, licenseNumber, zone, wereda, kebele, bulletNumber
+    }
+
+}
 module.exports = router;
