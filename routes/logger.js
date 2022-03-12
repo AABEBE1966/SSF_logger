@@ -135,9 +135,6 @@ router.get("/log_out", withAuthLogger, async function (req, res) {
 
 router.post("/log_user_data", withAuthLogger, async (req, res) => {
     const { firstName, lastName, province, zone, wereda, kebele, licenseNumber, armType, bulletNumber } = req.body
-    // check data 
-    // check for authorized user 
-    // decrypt the data before uploading it.
 
     try {
         let existingPerson = await Person.findOne({ licenseNumber: licenseNumber })
