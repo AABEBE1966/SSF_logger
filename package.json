@@ -7,7 +7,8 @@
     "client": "cd client && npm start",
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon server.js",
-    "dev": "concurrently --kill-others-on-fail \"npm run client\" \"npm run server\""
+    "dev": "concurrently --kill-others-on-fail \"npm run client\" \"npm run server\"",
+    "client:build": "cd client && npm run build"
   },
   "repository": {
     "type": "git",
