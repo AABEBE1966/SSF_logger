@@ -1,8 +1,16 @@
 // Import dependencies
+const dotenv = require("dotenv");
+dotenv.config({
+    path: "./config.env",
+});
+
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+
 const cors = require("cors");
 const path = require("path");
+const MONGO_URL = process.env.MONGO_URL;
 
 // Create a new express application named 'app'
 const app = express();
@@ -29,9 +37,9 @@ app.use(
 app.use(cors());
 
 // Require Route
-const api = require("./routes/routes");
+const loggerAPI= require("./routes/logger");
 // Configure app to use route
-app.use("/api/v1/", api);
+app.use("/api/v1/logger", loggerAPI);
 
 // This middleware informs the express application to serve our compiled React files
 if (
@@ -54,3 +62,7 @@ app.get("*", (req, res) => {
 
 // Configure our server to listen on the port defiend by our port variable
 app.listen(port, () => console.log(`BACK_END_SERVICE_PORT: ${port}`));
+mongoose
+    .connect(MONGO_URL)
+    .then(() => console.log(`mongodb connected: ${port}`))
+    .catch((error) => console.log(error.message));

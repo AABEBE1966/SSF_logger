@@ -4,7 +4,7 @@ function App() {
   const [user, setUser] = useState();
 
   const getData = () => {
-    fetch("/api/v1/say-something", {
+    fetch("/api/v1/logger/find_all_persons", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -13,7 +13,8 @@ function App() {
       .then(async (res) => {
         let data = await res.json();
         if (res.status === 200) {
-          console.log(data.message);
+          console.log("data")
+          console.log(data);
           console.log(data);
         } else if (res.status === 201) {
           console.log(data);
