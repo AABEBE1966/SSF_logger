@@ -1,5 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react";
+import LoggerSignUp from "./Logger/LoggerSignUp";
 function App() {
   const [user, setUser] = useState();
 
@@ -32,7 +33,16 @@ function App() {
     getData();
   }, []);
 
-  return <div className="App">show user : {user}</div>;
+  // admin
+  // admin login page
+  // logger login page
+  // user card
+
+  return (
+    <div className="App">
+      <LoggerSignUp />{" "}
+    </div>
+  );
 }
 
 export default App;
