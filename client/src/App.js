@@ -4,7 +4,7 @@ function App() {
   const [user, setUser] = useState();
 
   const getData = () => {
-    fetch("/api/v1/logger/find_all_persons", {
+    fetch("/api/v1/admin/find_metrics", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

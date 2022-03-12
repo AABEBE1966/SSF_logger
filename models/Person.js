@@ -17,10 +17,6 @@ const PersonSchema = mongoose.Schema({
         type: String,
         require: true
     },
-    province: {
-        type: String,
-        require: true
-    },
     zone: {
         type: String,
         require: true

@@ -38,8 +38,10 @@ app.use(cors());
 
 // Require Route
 const loggerAPI= require("./routes/logger");
+const adminAPI= require("./routes/admin")
 // Configure app to use route
 app.use("/api/v1/logger", loggerAPI);
+app.use("/api/v1/admin", adminAPI);
 
 // This middleware informs the express application to serve our compiled React files
 if (
