@@ -63,6 +63,7 @@ function AdminTableWereda(props) {
         return null;
     };
 
+    // https://www.javatpoint.com/react-table
     const columns = [{  
         Header: 'firstName',  
         accessor: 'firstName'  
