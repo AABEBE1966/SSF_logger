@@ -1,28 +1,31 @@
 import React, { useEffect, useState } from 'react';
 
 import { LineChart, PieChart, Pie, Cell, Line, CartesianGrid, XAxis, YAxis, Legend, Tooltip, BarChart, Bar, } from 'recharts';
-import { findAllMetrics, findAllMetricsForZone } from '../adapters/admin';
+import { findAllMetrics, findAllMetricsForWereda } from '../adapters/admin';
 import zones from "../Data";
 import { ChevronDown, ChevronLeft, Eye, EyeOff } from "react-feather";
 
-function AdminDataZone(props) {
+function AdminDataWereda(props) {
     const [allMetricsData, setAllMetricsData] = useState();
     const [allMetricsDataForGraph, setAllMetricsDataForGraph] = useState();
     const [pieData, setPieData] = useState();
     const [loading, setLoading] = useState(true);
+
     const [isShowingZones, setIsShowingZones] = useState(false);
+    const [isShowingDistricts, setIsShowingDistricts] = useState(false);
     const [selectedZone, setSelectedZone] = useState("");
+    const [selectedDistrict, setSelectedDistrict] = useState("");
 
 
     useEffect(async () => {
-        if (loading && selectedZone !== "") {
+        if (loading && selectedZone !== "" && selectedDistrict !== "") {
             console.log("It should call the api")
-            await findAllMetricsForZone(setAllMetricsData, selectedZone)
+            await findAllMetricsForWereda(setAllMetricsData, selectedZone, selectedDistrict)
             await generateAllMetricsData()
             await generatePieData()
             setLoading(false)
         }
-    }, [selectedZone,pieData,allMetricsData])
+    }, [selectedDistrict, pieData, allMetricsData])
 
     const generateAllMetricsData = async () => {
         let ans = []
@@ -64,7 +67,7 @@ function AdminDataZone(props) {
 
 
 
-    console.log("printing data in the page")
+
     console.log(allMetricsData)
     return (
         <div>
@@ -74,13 +77,33 @@ function AdminDataZone(props) {
                     onClick={() => setIsShowingZones(!isShowingZones)}
                     className=" mb-2 flex cursor-pointer justify-between rounded-md  border  p-2 shadow-lg "
                 >
-                    <p>{` ${selectedZone ? selectedZone : ""} `}</p>
-                    {selectedZone ? null : <p>Select Zone</p>}
+                    <p>{` ${selectedZone ? selectedZone : ""} , ${selectedDistrict ? selectedDistrict : ""
+                        } `}</p>
+                    {selectedZone ? null : <p>Zones</p>}
                     <ChevronDown
                         className={`transition-transform  ${isShowingZones ? " rotate-180 " : "rotate-0  "
                             }  `}
                     />
                 </div>
+
+
+                <div class="shadow md:shadow-lg px-2">
+                    <h1 class="text-center px-0 text-green-500">
+                        Overall data about arms and arm types
+                    </h1>
+                    {!loading && allMetricsDataForGraph ? <div class={`shadow md:shadow-lg px-2 py-2 grid grid-rows-3 grid-cols-4`}>
+                        {
+                            Object.keys(allMetricsData).map((count_name, idx) => {
+
+                                return <p>
+                                    {count_name}: {allMetricsData[count_name]}
+                                </p>
+
+                            })
+                        }
+                    </div> : <p>Loading</p>}
+                </div>
+
                 {isShowingZones && (
                     <div className=" max-h-[20rem] overflow-scroll rounded-md border px-4 shadow-2xl transition-all scrollbar-hide  ">
                         {Object.keys(zones).map((zone, idx) => {
@@ -92,39 +115,63 @@ function AdminDataZone(props) {
                                             } my-2 flex cursor-pointer justify-between`}
                                         onClick={() => {
                                             setSelectedZone(zone);
-                                            setIsShowingZones(false);
-                                            setLoading(true)
                                             if (selectedZone === zone) {
+                                                setIsShowingDistricts(!isShowingDistricts);
                                                 setSelectedZone("");
+                                                setSelectedDistrict("");
+                                            } else {
+                                                setIsShowingDistricts(true);
                                             }
                                         }}
                                     >
                                         <p>{zone}</p>
+                                        <ChevronDown />
                                     </div>
+                                    {isShowingDistricts && selectedZone === zone && (
+                                        <div className=" space-y-2 rounded-md border p-4  ">
+                                            {zones[selectedZone].map((district, idx) => {
+                                                return (
+                                                    <p
+                                                        key={idx}
+                                                        className=" cursor-pointer "
+                                                        onClick={() => {
+                                                            setSelectedDistrict(district);
+                                                            setIsShowingZones(false);
+                                                            setLoading(true)
+                                                        }}
+                                                    >
+                                                        {district}
+                                                    </p>
+                                                );
+                                            })}
+                                        </div>
+                                    )}
                                 </div>
                             );
                         })}
                     </div>
                 )}
             </div>
-
-            <div class="shadow md:shadow-lg px-2">
-                <h1 class="text-center px-0 text-green-500">
-                    Overall data about arms and arm types
-                </h1>
-                {!loading && allMetricsDataForGraph ? <div class={`shadow md:shadow-lg px-2 py-2 grid grid-rows-3 grid-cols-4`}>
-                    {
-                        Object.keys(allMetricsData).map((count_name, idx) => {
-
-                            return <p>
-                                {count_name}: {allMetricsData[count_name]}
-                            </p>
-
-                        })
-                    }
-                </div> : <p>Loading</p>}
-            </div>
-
+            {/* <LineChart width={600} height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+            </LineChart> */}
+            {/* <LineChart width={600} height={300} data={allMetricsDataForGraph} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+            </LineChart>
+            <BarChart width={600} height={300} data={data}>
+                <XAxis dataKey="name" tick={renderCustomAxisTick} />
+                <YAxis />
+                <Bar dataKey="uv" barSize={30} fill="#8884d8"
+                    label={renderCustomBarLabel} />
+            </BarChart> */}
             {!loading && allMetricsDataForGraph ? <BarChart width={600} height={300} data={allMetricsDataForGraph}>
                 <XAxis dataKey="name" stroke="#8884d8" />
                 <YAxis />
@@ -145,4 +192,4 @@ function AdminDataZone(props) {
     );
 }
 
-export default AdminDataZone;
+export default AdminDataWereda;

@@ -72,36 +72,102 @@ export const signInAdminrWithAPI = async (data, history, setLoggerDetails) => {
 
 
 export const findAllMetrics = async (setAllMetricsData) => {
-    await fetch("/api/v1/admin/find_all_metrics", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+  await fetch("/api/v1/admin/find_all_metrics", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(async (res) => {
+      let data = await res.json();
+      console.log("inside api call function");
+      if (res.status === 200) {
+        // const cookies = new Cookies();
+        // let isAuth = cookies.get("isAuth") === "true" ? true : false;
+        // isAuth ? history.push("/AdminDashboard") : console.log("not is auth");
+        setAllMetricsData(data);
+        console.log(data);
+        // showAlert(true, "Succesfully LoggedIn as a Admin", "succes");
+      } else if (res.status === 201) {
+        console.log(data.message);
+        // showAlert(true, data.message, "danger");
+      } else {
+        console.log(data.message);
+        // showAlert(true, "something is wrong please try again later!", "succes");
+      }
     })
-      .then(async (res) => {
-        let data = await res.json();
-        console.log("inside api call function");
-        if (res.status === 200) {
-          // const cookies = new Cookies();
-          // let isAuth = cookies.get("isAuth") === "true" ? true : false;
-          // isAuth ? history.push("/AdminDashboard") : console.log("not is auth");
-          setAllMetricsData(data);
-          console.log(data);
-          // showAlert(true, "Succesfully LoggedIn as a Admin", "succes");
-        } else if (res.status === 201) {
-          console.log(data.message);
-          // showAlert(true, data.message, "danger");
-        } else {
-          console.log(data.message);
-          // showAlert(true, "something is wrong please try again later!", "succes");
-        }
-      })
-      .catch((err) => {
-        console.log(err.message);
-        // showAlert(true, err.message, "succes");
-      });
-  };
-  
+    .catch((err) => {
+      console.log(err.message);
+      // showAlert(true, err.message, "succes");
+    });
+};
 
 
-  
+export const findAllMetricsForZone = async (setAllMetricsData, zone) => {
+  await fetch("/api/v1/admin/find_all_metrics_for_zone", {
+    method: "POST",
+    body: JSON.stringify({ zone: zone }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(async (res) => {
+      let data = await res.json();
+      console.log("inside api call function");
+      if (res.status === 200) {
+        // const cookies = new Cookies();
+        // let isAuth = cookies.get("isAuth") === "true" ? true : false;
+        // isAuth ? history.push("/AdminDashboard") : console.log("not is auth");
+        setAllMetricsData(data);
+        // console.log(data);
+        // showAlert(true, "Succesfully LoggedIn as a Admin", "succes");
+      } else if (res.status === 201) {
+        console.log(data.message);
+        // showAlert(true, data.message, "danger");
+      } else {
+        console.log(data.message);
+        // showAlert(true, "something is wrong please try again later!", "succes");
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+      // showAlert(true, err.message, "succes");
+    });
+};
+
+
+export const findAllMetricsForWereda = async (setAllMetricsData, zone, wereda) => {
+  await fetch("/api/v1/admin/find_all_metrics_for_wereda", {
+    method: "POST",
+    body: JSON.stringify({ zone: zone, wereda: wereda }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(async (res) => {
+      let data = await res.json();
+      console.log("inside api call function");
+      if (res.status === 200) {
+        // const cookies = new Cookies();
+        // let isAuth = cookies.get("isAuth") === "true" ? true : false;
+        // isAuth ? history.push("/AdminDashboard") : console.log("not is auth");
+        setAllMetricsData(data);
+        // console.log(data);
+        // showAlert(true, "Succesfully LoggedIn as a Admin", "succes");
+      } else if (res.status === 201) {
+        console.log(data.message);
+        // showAlert(true, data.message, "danger");
+      } else {
+        console.log(data.message);
+        // showAlert(true, "something is wrong please try again later!", "succes");
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+      // showAlert(true, err.message, "succes");
+    });
+};
+
+
+
+// findAllMetricsForWereda

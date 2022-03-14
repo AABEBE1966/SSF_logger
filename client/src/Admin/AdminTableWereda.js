@@ -1,3 +1,4 @@
+import React from 'react';
 import React, { useEffect, useState } from 'react';
 
 import { LineChart, PieChart, Pie, Cell, Line, CartesianGrid, XAxis, YAxis, Legend, Tooltip, BarChart, Bar, } from 'recharts';
@@ -5,7 +6,7 @@ import { findAllMetrics, findAllMetricsForZone } from '../adapters/admin';
 import zones from "../Data";
 import { ChevronDown, ChevronLeft, Eye, EyeOff } from "react-feather";
 
-function AdminDataZone(props) {
+function AdminTableWereda(props) {
     const [allMetricsData, setAllMetricsData] = useState();
     const [allMetricsDataForGraph, setAllMetricsDataForGraph] = useState();
     const [pieData, setPieData] = useState();
@@ -62,6 +63,13 @@ function AdminDataZone(props) {
         return null;
     };
 
+    const columns = [{  
+        Header: 'firstName',  
+        accessor: 'firstName'  
+       },{  
+       Header: 'lastName',  
+       accessor: 'lastName'  
+       }]  
 
 
     console.log("printing data in the page")
@@ -145,4 +153,4 @@ function AdminDataZone(props) {
     );
 }
 
-export default AdminDataZone;
+export default AdminTableWereda;

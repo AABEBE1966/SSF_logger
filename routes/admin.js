@@ -224,7 +224,7 @@ router.get("/find_all_metrics", async (req, res) => {
 });
 
 
-router.get("/find_all_metrics_for_zone", async (req, res) => {
+router.post("/find_all_metrics_for_zone", async (req, res) => {
     const { zone } = req.body
     console.log(zone)
 
@@ -261,7 +261,7 @@ router.get("/find_all_metrics_for_zone", async (req, res) => {
 
 
 
-router.get("/find_all_metrics_for_wereda", async (req, res) => {
+router.post("/find_all_metrics_for_wereda", async (req, res) => {
     const { zone, wereda } = req.body
 
     const person = await Person.find({ zone: zone, wereda: wereda }).count();
