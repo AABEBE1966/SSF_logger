@@ -89,7 +89,7 @@ router.post("/sign_in", async function (req, res) {
                 res.cookie("admin_token", token);
                 res.cookie("isAuth", true);
                 await admin.save();
-                let adminRes = await Admin.findById(admin._id, { password: 0, tokens: 0, email:0 })
+                let adminRes = await Admin.findById(admin._id, { password: 0, tokens: 0, email: 0 })
                 return res.status(200).send({
                     message: "Logger signed in successfully!",
                     admin: adminRes
@@ -161,7 +161,7 @@ router.get("/get_logged_in_admin", withAuthAdmin, async (req, res) => {
     }
 });
 
-router.get("/find_all_persons_by_zone/", withAuthAdmin, async (req, res) => {
+router.post("/find_all_persons_by_zone/", withAuthAdmin, async (req, res) => {
     const { zone } = req.body
     try {
         let persons = await Person.find({ zone: zone })
@@ -171,7 +171,7 @@ router.get("/find_all_persons_by_zone/", withAuthAdmin, async (req, res) => {
     }
 });
 
-router.get("/find_all_persons_by_wereda/", withAuthAdmin, async (req, res) => {
+router.post("/find_all_persons_by_wereda/", async (req, res) => {
     const { wereda, zone } = req.body
     try {
         let persons = await Person.find({ zone: zone, wereda: wereda })
@@ -266,7 +266,7 @@ router.post("/find_all_metrics_for_wereda", async (req, res) => {
 
     const person = await Person.find({ zone: zone, wereda: wereda }).count();
     const bullet_data = await Person.aggregate([{
-        $match: { zone: zone }
+        $match: { zone: zone, wereda: wereda }
     }, {
         $group: {
             _id: null,
@@ -275,16 +275,16 @@ router.post("/find_all_metrics_for_wereda", async (req, res) => {
             }
         }
     }]);
-    const AK47 = await Person.find({ zone: zone, armType: 'AK 47' }).count();
-    const brail = await Person.find({ zone: zone, armType: 'Brail' }).count();
-    const dishka = await Person.find({ zone: zone, armType: 'Dishka' }).count();
-    const abraraw = await Person.find({ zone: zone, armType: 'Abraraw' }).count();
-    const guande = await Person.find({ zone: zone, armType: 'Guande' }).count();
+    const AK47 = await Person.find({ zone: zone, wereda: wereda, armType: 'AK 47' }).count();
+    const brail = await Person.find({ zone: zone, wereda: wereda, armType: 'Brail' }).count();
+    const dishka = await Person.find({ zone: zone, wereda: wereda, armType: 'Dishka' }).count();
+    const abraraw = await Person.find({ zone: zone, wereda: wereda, armType: 'Abraraw' }).count();
+    const guande = await Person.find({ zone: zone, wereda: wereda, armType: 'Guande' }).count();
 
     let bullet = bullet_data[0].total
     let data = {
         "person": person, "AK47": AK47, "bullet": bullet
-        , "brail": brail, "dishka": dishka, "abraraw": abraraw, "guande": guande
+        , "brail": brail, "dishka": dishka, "abraraw": abraraw, "guande": guande, wereda: wereda, zone: zone
     }
 
     try {

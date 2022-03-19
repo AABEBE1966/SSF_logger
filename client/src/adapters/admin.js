@@ -169,5 +169,41 @@ export const findAllMetricsForWereda = async (setAllMetricsData, zone, wereda) =
 };
 
 
+export const findAllPersonForWereda = async (setAllPersonForWereda, zone, wereda) => {
+  await fetch("/api/v1/admin/find_all_persons_by_wereda", {
+    method: "POST",
+    body: JSON.stringify({ zone: zone, wereda: wereda }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(async (res) => {
+      let data = await res.json();
+      console.log("inside findAllPersonForWereda api");
+      if (res.status === 200) {
+        // const cookies = new Cookies();
+        // let isAuth = cookies.get("isAuth") === "true" ? true : false;
+        // isAuth ? history.push("/AdminDashboard") : console.log("not is auth");
+        console.log(data)
+        setAllPersonForWereda(data);
+        // console.log(data);
+        // showAlert(true, "Succesfully LoggedIn as a Admin", "succes");
+      } else if (res.status === 201) {
+        console.log(data.message);
+        // showAlert(true, data.message, "danger");
+      } else {
+        console.log(data.message);
+        // showAlert(true, "something is wrong please try again later!", "succes");
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+      // showAlert(true, err.message, "succes");
+    });
+};
+
+
+
+
 
 // findAllMetricsForWereda
