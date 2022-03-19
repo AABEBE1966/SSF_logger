@@ -4,7 +4,7 @@ import { LineChart, ResponsiveContainer, PieChart, Pie, Cell, Line, CartesianGri
 import { findAllMetrics, findAllMetricsForWereda } from '../adapters/admin';
 import zones from "../Data";
 import { ChevronDown, ChevronLeft, Eye, EyeOff } from "react-feather";
-import TableComponent from './TableComponent';
+import TableComponent from './TableForWeredaData';
 
 function AdminDataWereda(props) {
     const [allMetricsData, setAllMetricsData] = useState();
@@ -21,10 +21,10 @@ function AdminDataWereda(props) {
     useEffect(async () => {
         if (loading && selectedZone !== "" && selectedDistrict !== "") {
             console.log("It should call the api")
-            setLoading(false)
             await findAllMetricsForWereda(setAllMetricsData, selectedZone, selectedDistrict)
             await generateAllMetricsData()
             await generatePieData()
+            setLoading(false)
         }
     }, [selectedDistrict, pieData, allMetricsData])
 
@@ -161,7 +161,7 @@ function AdminDataWereda(props) {
                     </div>
                 )}
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 shadow md:shadow-lg py-2" >
                 {!loading && allMetricsDataForGraph ?
                     <ResponsiveContainer width="100%" height={300}>
                         <BarChart data={allMetricsDataForGraph}>

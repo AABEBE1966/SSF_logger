@@ -3,7 +3,7 @@ import AdminDataViewer from './AdminDataViewer';
 import AdminDataWereda from './AdminDataWereda';
 import AdminDataZone from './AdminDataZone';
 import AdminTableWereda from './AdminTableWereda';
-import TableComponent from './TableComponent';
+import TableComponent from './TableForWeredaData';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';

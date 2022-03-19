@@ -224,6 +224,134 @@ router.get("/find_all_metrics", async (req, res) => {
 });
 
 
+router.post("/find_all_metrics_for_zone_with_wereda", async (req, res) => {
+    const { zone } = req.body
+
+    const zone_wereda_arm_type_data  = await Person.aggregate([{
+        $match: { zone: zone }
+    }, {
+        $group: {
+            _id: { wereda: "$wereda", armType: "$armType" },
+            total_bullet: {
+                $sum: "$bulletNumber"
+            },
+            total_person: {
+                $sum: 1
+            },
+        }
+    }]);
+
+    let temp_data = {}
+
+    for (let i = 0; i < zone_wereda_arm_type_data.length; i++) {
+        let wereda_arm_type_data = zone_wereda_arm_type_data[i]
+        let wereda_name = wereda_arm_type_data["_id"]['wereda']
+        let arm_type = wereda_arm_type_data["_id"]['armType']
+        let total_person = wereda_arm_type_data["total_person"]
+        let total_bullet = wereda_arm_type_data["total_bullet"]
+
+        if (wereda_name in temp_data) {
+            temp_data[wereda_name][arm_type] = temp_data[wereda_name][arm_type] + total_person
+            temp_data[wereda_name]["person"] = temp_data[wereda_name]["person"] + total_person
+            temp_data[wereda_name]["bullet"] = temp_data[wereda_name]["bullet"] + total_bullet
+        } else {
+            temp_data[wereda_name] = {
+                "Dishka": 0,
+                "Guande": 0,
+                "Brail": 0,
+                "Abraraw": 0,
+                "AK 47": 0,
+                "bullet": 0,
+                "person":0
+            }
+            temp_data[wereda_name][arm_type] = total_person
+            temp_data[wereda_name]["person"] = total_person
+            temp_data[wereda_name]["bullet"] = total_bullet
+
+        }
+       // data['zone']=zone
+    }
+    let data=[]
+    let keys = Object.keys(temp_data);
+    for (let i = 0; i < keys.length; i++) {
+        let wereda_name = keys[i]
+        let value = temp_data[wereda_name];
+        value['wereda']=wereda_name
+        data.push(value)
+    }
+
+
+    try {
+        //let persons = await Person.find({ licenseNumber: licenseNumber })
+        return res.status(200).send(data);
+    } catch (err) {
+        return res.status(201).send({ message: "Something is wrong. Please retry. " + err.message });
+    }
+});
+
+
+router.get("/find_all_metrics_for_region_with_zone", async (req, res) => {
+
+    const region_zone_arm_type_data  = await Person.aggregate([ {
+        $group: {
+            _id: { zone: "$zone", armType: "$armType" },
+            total_bullet: {
+                $sum: "$bulletNumber"
+            },
+            total_person: {
+                $sum: 1
+            },
+        }
+    }]);
+
+    let temp_data = {}
+
+    for (let i = 0; i < region_zone_arm_type_data.length; i++) {
+        let zone_arm_type_data = region_zone_arm_type_data[i]
+        let zone_name = zone_arm_type_data["_id"]['zone']
+        let arm_type = zone_arm_type_data["_id"]['armType']
+        let total_person = zone_arm_type_data["total_person"]
+        let total_bullet = zone_arm_type_data["total_bullet"]
+
+        if (zone_name in temp_data) {
+            temp_data[zone_name][arm_type] = temp_data[zone_name][arm_type] + total_person
+            temp_data[zone_name]["person"] = temp_data[zone_name]["person"] + total_person
+            temp_data[zone_name]["bullet"] = temp_data[zone_name]["bullet"] + total_bullet
+        } else {
+            temp_data[zone_name] = {
+                "Dishka": 0,
+                "Guande": 0,
+                "Brail": 0,
+                "Abraraw": 0,
+                "AK 47": 0,
+                "bullet": 0,
+                "person":0
+            }
+            temp_data[zone_name][arm_type] = total_person
+            temp_data[zone_name]["person"] = total_person
+            temp_data[zone_name]["bullet"] = total_bullet
+
+        }
+       // data['zone']=zone
+    }
+    let data=[]
+    let keys = Object.keys(temp_data);
+    for (let i = 0; i < keys.length; i++) {
+        let zone_name = keys[i]
+        let value = temp_data[zone_name];
+        value['zone']=zone_name
+        data.push(value)
+    }
+
+
+    try {
+        //let persons = await Person.find({ licenseNumber: licenseNumber })
+        return res.status(200).send(data);
+    } catch (err) {
+        return res.status(201).send({ message: "Something is wrong. Please retry. " + err.message });
+    }
+});
+
 router.post("/find_all_metrics_for_zone", async (req, res) => {
     const { zone } = req.body
     console.log(zone)
@@ -248,7 +376,7 @@ router.post("/find_all_metrics_for_zone", async (req, res) => {
     let bullet = bullet_data[0].total
     let data = {
         "person": person, "AK47": AK47, "bullet": bullet
-        , "brail": brail, "dishka": dishka, "abraraw": abraraw, "guande": guande
+        , "brail": brail, "dishka": dishka, "abraraw": abraraw, "guande": guande, zone: zone
     }
 
     try {

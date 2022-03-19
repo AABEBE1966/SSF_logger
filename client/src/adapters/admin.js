@@ -204,6 +204,71 @@ export const findAllPersonForWereda = async (setAllPersonForWereda, zone, wereda
 
 
 
+export const findDataForZoneGroupedByWereda = async (setZoneDataGroupedByWereda, zone) => {
+  await fetch("/api/v1/admin/find_all_metrics_for_zone_with_wereda", {
+    method: "POST",
+    body: JSON.stringify({ zone: zone}),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(async (res) => {
+      let data = await res.json();
+      console.log("inside findAllPersonForWereda api");
+      if (res.status === 200) {
+        // const cookies = new Cookies();
+        // let isAuth = cookies.get("isAuth") === "true" ? true : false;
+        // isAuth ? history.push("/AdminDashboard") : console.log("not is auth");
+        console.log(data)
+        setZoneDataGroupedByWereda(data);
+        // console.log(data);
+        // showAlert(true, "Succesfully LoggedIn as a Admin", "succes");
+      } else if (res.status === 201) {
+        console.log(data.message);
+        // showAlert(true, data.message, "danger");
+      } else {
+        console.log(data.message);
+        // showAlert(true, "something is wrong please try again later!", "succes");
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+      // showAlert(true, err.message, "succes");
+    });
+};
+
+
+
+export const findDataForRegionGroupedByZone = async (setRegionDataGroupedByZone) => {
+  await fetch("/api/v1/admin/find_all_metrics_for_region_with_zone", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(async (res) => {
+      let data = await res.json();
+      console.log("inside api call function");
+      if (res.status === 200) {
+        // const cookies = new Cookies();
+        // let isAuth = cookies.get("isAuth") === "true" ? true : false;
+        // isAuth ? history.push("/AdminDashboard") : console.log("not is auth");
+        setRegionDataGroupedByZone(data);
+        console.log(data);
+        // showAlert(true, "Succesfully LoggedIn as a Admin", "succes");
+      } else if (res.status === 201) {
+        console.log(data.message);
+        // showAlert(true, data.message, "danger");
+      } else {
+        console.log(data.message);
+        // showAlert(true, "something is wrong please try again later!", "succes");
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+      // showAlert(true, err.message, "succes");
+    });
+};
 
 
 // findAllMetricsForWereda

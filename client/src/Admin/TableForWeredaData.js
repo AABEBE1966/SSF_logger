@@ -21,7 +21,7 @@ const columns = [
 ];
 
 
-export default function TableComponent(props) {
+export default function TableForWeredaData(props) {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(50);
     const [loading, setLoading] = useState(true);
@@ -77,7 +77,7 @@ export default function TableComponent(props) {
                                                 {columns.map((column) => {
                                                     const value = row[column.id];
                                                     return (
-                                                        <TableCell key={column.id} align={column.align}>
+                                                        <TableCell key={`${column.id}+ ${row.licenseNumber}`} align={column.align}>
                                                             {column.format && typeof value === 'number'
                                                                 ? column.format(value)
                                                                 : value}
