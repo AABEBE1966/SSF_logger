@@ -9,6 +9,7 @@ import zones from "../Data";
 import { createLogger } from "../adapters/logger";
 import { useLoggerContext } from "../contexts/loggerContext";
 import { Link, useHistory } from "react-router-dom";
+import ResponsiveNavBar from "../ResponsiveNavBar";
 
 export default function LoggerSignUp() {
   const { setLoggerDetails } = useLoggerContext();
@@ -40,6 +41,8 @@ export default function LoggerSignUp() {
   const [selectedDistrict, setSelectedDistrict] = useState();
   return (
     <div className="  flex  flex-col items-center justify-center ">
+      <ResponsiveNavBar />
+
       <div className="mb-4 w-full max-w-sm">
         <ChevronLeft
           onClick={() => history.goBack()}
@@ -61,11 +64,10 @@ export default function LoggerSignUp() {
             <p className=" text-headingFour font-semibold ">Sign Up</p>
           </div>
           <div
-            className={`border-gray-gray4 my-2  rounded  border-2 bg-gray-100 transition duration-150 ease-in-out focus-within:border-blue-500  ${
-              errors.firstName
+            className={`border-gray-gray4 my-2  rounded  border-2 bg-gray-100 transition duration-150 ease-in-out focus-within:border-blue-500  ${errors.firstName
                 ? "border-red-500 focus-within:border-red-500"
                 : null
-            } `}
+              } `}
           >
             <label
               className=" block select-none px-2 pt-1.5 text-bodyTwo  font-semibold "
@@ -86,11 +88,10 @@ export default function LoggerSignUp() {
             {errors.firstName?.type === "required" && errors.firstName.message}
           </p>
           <div
-            className={`border-gray-gray4 my-2  rounded  border-2 bg-gray-100 transition duration-150 ease-in-out focus-within:border-blue-500  ${
-              errors.lastName
+            className={`border-gray-gray4 my-2  rounded  border-2 bg-gray-100 transition duration-150 ease-in-out focus-within:border-blue-500  ${errors.lastName
                 ? "border-red-500 focus-within:border-red-500"
                 : null
-            } `}
+              } `}
           >
             <label
               className=" block select-none px-2 pt-1.5 text-bodyTwo  font-semibold "
@@ -115,14 +116,12 @@ export default function LoggerSignUp() {
               onClick={() => setIsShowingZones(!isShowingZones)}
               className=" mb-2 flex cursor-pointer justify-between rounded-md  border  p-2 shadow-lg "
             >
-              <p>{` ${selectedZone ? selectedZone : ""} , ${
-                selectedDistrict ? selectedDistrict : ""
-              } `}</p>
+              <p>{` ${selectedZone ? selectedZone : ""} , ${selectedDistrict ? selectedDistrict : ""
+                } `}</p>
               {selectedZone ? null : <p>Zones</p>}
               <ChevronDown
-                className={`transition-transform  ${
-                  isShowingZones ? " rotate-180 " : "rotate-0  "
-                }  `}
+                className={`transition-transform  ${isShowingZones ? " rotate-180 " : "rotate-0  "
+                  }  `}
               />
             </div>
             {isShowingZones && (
@@ -131,10 +130,9 @@ export default function LoggerSignUp() {
                   return (
                     <div key={idx} className={`  rounded-md  px-4 `}>
                       <div
-                        className={`${
-                          selectedZone === zone &&
+                        className={`${selectedZone === zone &&
                           "text-headingSix font-medium "
-                        } my-2 flex cursor-pointer justify-between`}
+                          } my-2 flex cursor-pointer justify-between`}
                         onClick={() => {
                           setSelectedZone(zone);
                           if (selectedZone === zone) {
@@ -174,9 +172,8 @@ export default function LoggerSignUp() {
             )}
           </div>
           <div
-            className={` my-2  rounded  border-2 bg-gray-100 transition duration-150 ease-in-out focus-within:border-blue-500 ${
-              errors.email ? "border-red-500 focus-within:border-red-500" : null
-            } `}
+            className={` my-2  rounded  border-2 bg-gray-100 transition duration-150 ease-in-out focus-within:border-blue-500 ${errors.email ? "border-red-500 focus-within:border-red-500" : null
+              } `}
           >
             <label
               className=" block select-none px-2 pt-1.5 text-bodyTwo  font-semibold "
@@ -196,11 +193,10 @@ export default function LoggerSignUp() {
 
           <div className="text-red-500">{errors.email?.message}</div>
           <div
-            className={`border-gray-gray4 my-2 flex items-center justify-between rounded  border-2 bg-gray-100 transition duration-150 ease-in-out focus-within:border-blue-500  ${
-              errors.password
+            className={`border-gray-gray4 my-2 flex items-center justify-between rounded  border-2 bg-gray-100 transition duration-150 ease-in-out focus-within:border-blue-500  ${errors.password
                 ? "border-red-500 focus-within:border-red-500"
                 : null
-            } `}
+              } `}
           >
             <div className=" flex-grow ">
               <label

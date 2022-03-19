@@ -7,48 +7,19 @@ import { LoggerProvider } from "./contexts/loggerContext";
 import AdminDataViewer from "./Admin/AdminDataViewer";
 import LoggerProfile from "./Logger/LoggerProfile";
 import Admin from "./Admin/Admin";
+import Home from "./Home";
 function App() {
   const [user, setUser] = useState();
 
-  // const getData = () => {
-  //   fetch("/api/v1/admin/find_metrics", {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   })
-  //     .then(async (res) => {
-  //       let data = await res.json();
-  //       if (res.status === 200) {
-  //         console.log("data");
-  //         console.log(data);
-  //         console.log(data);
-  //       } else if (res.status === 201) {
-  //         console.log(data);
-  //       } else {
-  //         console.log(data);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.message);
-  //       console.log(err);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   getData();
-  // }, []);
-
-  // admin
-  // admin login page
-  // logger login page
-  // user card
 
   return (
     <div className="App">
       <LoggerProvider>
         <Router>
           <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
             <Route exact path="/LoggerSignUp">
               <LoggerSignUp />
             </Route>

@@ -1,6 +1,7 @@
 import React from "react";
 import { User } from "react-feather";
 import { useLoggerContext } from "../contexts/loggerContext";
+import ResponsiveNavBar from "../ResponsiveNavBar";
 
 export default function Logger() {
   const { loggerDetails } = useLoggerContext();
@@ -9,6 +10,8 @@ export default function Logger() {
 
   return (
     <div className=" w-full max-w-sm ">
+      <ResponsiveNavBar />
+
       <div className="rounded border px-4 py-6">
         <div>
           <div className=" inline-block rounded-full bg-purple-300 p-6 ">
