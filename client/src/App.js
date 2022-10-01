@@ -8,9 +8,9 @@ import AdminDataViewer from "./Admin/AdminDataViewer";
 import LoggerProfile from "./Logger/LoggerProfile";
 import Admin from "./Admin/Admin";
 import Home from "./Home";
+import AdminSignIn from "./Admin/AdminSignIn";
 function App() {
   const [user, setUser] = useState();
-
 
   return (
     <div className="App">
@@ -25,6 +25,9 @@ function App() {
             </Route>
             <Route path="/LoggerSignIn">
               <LoggerSignIn />
+            </Route>
+            <Route path="/AdminSignIn">
+              <AdminSignIn />
             </Route>
             <Route exact path="/AdminDataVisualizer">
               <Admin />

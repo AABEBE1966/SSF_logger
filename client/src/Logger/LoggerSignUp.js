@@ -232,7 +232,7 @@ export default function LoggerSignUp() {
           </div>
           <div className="text-red-500">{errors.password?.message}</div>
           <div className=" flex justify-center ">
-            <Button>Join Vision</Button>
+            <Button>Join SSF</Button>
           </div>
           <div className="  text-xs w-full rounded-md bg-gray-50 p-3 text-center">
             already a member?{" "}

@@ -51,8 +51,9 @@ export default function LoggerSignIn() {
             <p className=" text-headingFour font-semibold ">SignIn</p>
           </div>
           <div
-            className={`border-gray-gray4 my-2  rounded  border-2 bg-gray-100 transition duration-150 ease-in-out focus-within:border-blue-500  ${errors.name ? "border-red-500 focus-within:border-red-500" : null
-              } `}
+            className={`border-gray-gray4 my-2  rounded  border-2 bg-gray-100 transition duration-150 ease-in-out focus-within:border-blue-500  ${
+              errors.name ? "border-red-500 focus-within:border-red-500" : null
+            } `}
           >
             <label
               className=" block select-none px-2 pt-1.5 text-bodyTwo  font-semibold "
@@ -72,10 +73,11 @@ export default function LoggerSignIn() {
           <div className="text-red-500">{errors.email?.message}</div>
 
           <div
-            className={`border-gray-gray4 my-2 flex items-center justify-between rounded  border-2 bg-gray-100 transition duration-150 ease-in-out focus-within:border-blue-500  ${errors.password
+            className={`border-gray-gray4 my-2 flex items-center justify-between rounded  border-2 bg-gray-100 transition duration-150 ease-in-out focus-within:border-blue-500  ${
+              errors.password
                 ? "border-red-500 focus-within:border-red-500"
                 : null
-              } `}
+            } `}
           >
             <div className=" flex-grow ">
               <label
@@ -108,7 +110,7 @@ export default function LoggerSignIn() {
           </div>
           <div className="text-red-500">{errors.password?.message}</div>
           <div className=" flex justify-center ">
-            <Button>Join Vision</Button>
+            <Button>Join SSF</Button>
           </div>
           <div className="  text-xs w-full rounded-md bg-gray-50 p-3 text-center">
             Dont have Logger Account?

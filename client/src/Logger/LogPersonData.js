@@ -45,7 +45,7 @@ export default function LogPersonData({ setPersonData, personData }) {
       >
         <div className=" m-auto max-w-sm space-y-4 rounded-md bg-white p-6 shadow-md ">
           <div>
-            <p className=" text-headingFour font-semibold ">SignIn</p>
+            <p className=" text-headingFour font-semibold ">Log User Data</p>
           </div>
           <div
             className={`border-gray-gray4 my-2  rounded  border-2 bg-gray-100 transition duration-150 ease-in-out focus-within:border-blue-500  ${

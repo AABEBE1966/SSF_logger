@@ -1,13 +1,10 @@
 import Cookies from "universal-cookie";
 
-export const createAdmin = async (
-  data,
-  history
-) => {
+export const createAdmin = async (data, history) => {
   await fetch("/api/v1/admin/sign_up", {
     method: "POST",
     body: JSON.stringify({
-      data
+      data,
     }),
     headers: {
       "Content-Type": "application/json",
@@ -38,7 +35,7 @@ export const createAdmin = async (
     });
 };
 
-export const signInAdminrWithAPI = async (data, history, setLoggerDetails) => {
+export const signInAdminWithAPI = async (data, history, setLoggerDetails) => {
   await fetch("/api/v1/admin/sign_in", {
     method: "POST",
     body: JSON.stringify(data),
@@ -51,7 +48,7 @@ export const signInAdminrWithAPI = async (data, history, setLoggerDetails) => {
       if (res.status === 200) {
         // const cookies = new Cookies();
         // let isAuth = cookies.get("isAuth") === "true" ? true : false;
-        // isAuth ? history.push("/AdminDashboard") : console.log("not is auth");
+        history.push("/AdminDataVisualizer");
         setLoggerDetails(data.admin);
         console.log(data.message);
         console.log(data.logger);
@@ -69,7 +66,6 @@ export const signInAdminrWithAPI = async (data, history, setLoggerDetails) => {
       // showAlert(true, err.message, "succes");
     });
 };
-
 
 export const findAllMetrics = async (setAllMetricsData) => {
   await fetch("/api/v1/admin/find_all_metrics", {
@@ -101,7 +97,6 @@ export const findAllMetrics = async (setAllMetricsData) => {
       // showAlert(true, err.message, "succes");
     });
 };
-
 
 export const findAllMetricsForZone = async (setAllMetricsData, zone) => {
   await fetch("/api/v1/admin/find_all_metrics_for_zone", {
@@ -135,8 +130,11 @@ export const findAllMetricsForZone = async (setAllMetricsData, zone) => {
     });
 };
 
-
-export const findAllMetricsForWereda = async (setAllMetricsData, zone, wereda) => {
+export const findAllMetricsForWereda = async (
+  setAllMetricsData,
+  zone,
+  wereda
+) => {
   await fetch("/api/v1/admin/find_all_metrics_for_wereda", {
     method: "POST",
     body: JSON.stringify({ zone: zone, wereda: wereda }),
@@ -168,8 +166,11 @@ export const findAllMetricsForWereda = async (setAllMetricsData, zone, wereda) =
     });
 };
 
-
-export const findAllPersonForWereda = async (setAllPersonForWereda, zone, wereda) => {
+export const findAllPersonForWereda = async (
+  setAllPersonForWereda,
+  zone,
+  wereda
+) => {
   await fetch("/api/v1/admin/find_all_persons_by_wereda", {
     method: "POST",
     body: JSON.stringify({ zone: zone, wereda: wereda }),
@@ -184,7 +185,7 @@ export const findAllPersonForWereda = async (setAllPersonForWereda, zone, wereda
         // const cookies = new Cookies();
         // let isAuth = cookies.get("isAuth") === "true" ? true : false;
         // isAuth ? history.push("/AdminDashboard") : console.log("not is auth");
-        console.log(data)
+        console.log(data);
         setAllPersonForWereda(data);
         // console.log(data);
         // showAlert(true, "Succesfully LoggedIn as a Admin", "succes");
@@ -202,12 +203,13 @@ export const findAllPersonForWereda = async (setAllPersonForWereda, zone, wereda
     });
 };
 
-
-
-export const findDataForZoneGroupedByWereda = async (setZoneDataGroupedByWereda, zone) => {
+export const findDataForZoneGroupedByWereda = async (
+  setZoneDataGroupedByWereda,
+  zone
+) => {
   await fetch("/api/v1/admin/find_all_metrics_for_zone_with_wereda", {
     method: "POST",
-    body: JSON.stringify({ zone: zone}),
+    body: JSON.stringify({ zone: zone }),
     headers: {
       "Content-Type": "application/json",
     },
@@ -219,7 +221,7 @@ export const findDataForZoneGroupedByWereda = async (setZoneDataGroupedByWereda,
         // const cookies = new Cookies();
         // let isAuth = cookies.get("isAuth") === "true" ? true : false;
         // isAuth ? history.push("/AdminDashboard") : console.log("not is auth");
-        console.log(data)
+        console.log(data);
         setZoneDataGroupedByWereda(data);
         // console.log(data);
         // showAlert(true, "Succesfully LoggedIn as a Admin", "succes");
@@ -237,9 +239,9 @@ export const findDataForZoneGroupedByWereda = async (setZoneDataGroupedByWereda,
     });
 };
 
-
-
-export const findDataForRegionGroupedByZone = async (setRegionDataGroupedByZone) => {
+export const findDataForRegionGroupedByZone = async (
+  setRegionDataGroupedByZone
+) => {
   await fetch("/api/v1/admin/find_all_metrics_for_region_with_zone", {
     method: "GET",
     headers: {
@@ -269,6 +271,5 @@ export const findDataForRegionGroupedByZone = async (setRegionDataGroupedByZone)
       // showAlert(true, err.message, "succes");
     });
 };
-
 
 // findAllMetricsForWereda

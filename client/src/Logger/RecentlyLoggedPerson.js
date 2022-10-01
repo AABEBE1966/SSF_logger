@@ -4,7 +4,7 @@ export default function RecentlyLoggedPerson({ personData }) {
   console.log(personData);
 
   return (
-    <>
+    <div className=" my-4 flex w-full max-w-xs flex-col gap-4">
       {personData.map((person, idx) => {
         return (
           <div key={idx} className=" w-full max-w-sm ">
@@ -48,6 +48,6 @@ export default function RecentlyLoggedPerson({ personData }) {
           </div>
         );
       })}
-    </>
+    </div>
   );
 }
