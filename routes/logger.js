@@ -180,14 +180,12 @@ router.post("/log_user_data", withAuthLogger, async (req, res) => {
   console.log(req.body);
 
   try {
-    let existingPerson = await Person.findOne({ licenseNumber: licenseNumber });
-    if (existingPerson) {
-      return res
-        .status(201)
-        .send({
-          message: `Person with licenseNumber: ${licenseNumber} is logged already. `,
-        });
-    }
+    // let existingPerson = await Person.findOne({ licenseNumber: licenseNumber });
+    // if (existingPerson) {
+    //   return res.status(201).send({
+    //     message: `Person with licenseNumber: ${licenseNumber} is logged already. `,
+    //   });
+    // }
     let person = new Person({
       firstName,
       lastName,
@@ -212,7 +210,6 @@ router.post("/log_user_data", withAuthLogger, async (req, res) => {
 router.get("/find_all_persons", async (req, res) => {
   try {
     let persons = await Person.find({});
-    console.log(persons);
     return res.status(200).send(persons);
   } catch (err) {
     return res
