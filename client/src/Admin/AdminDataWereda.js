@@ -88,7 +88,7 @@ function AdminDataWereda(props) {
                 >
                     <p>{` ${selectedZone ? selectedZone : ""} , ${selectedDistrict ? selectedDistrict : ""
                         } `}</p>
-                    {selectedZone ? null : <p>Select a Zone</p>}
+                    {selectedZone ? null : <p>Select a Zone with Wereda</p>}
                     <ChevronDown
                         className={`transition-transform  ${isShowingZones ? " rotate-180 " : "rotate-0  "
                             }  `}
